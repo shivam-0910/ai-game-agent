@@ -1,0 +1,61 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+
+# ---- IDE / editor files ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- OS-generated files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Environment / secrets ----
+.env
+.env.*
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+
+# ---- Generated model files (trained weights/checkpoints) ----
+models/*.pt
+models/*.pth
+models/*.ckpt
+models/*.h5
+
+# ---- Training outputs / logs ----
+*.log
+logs/
+runs/
+results/*.csv
+results/*.json
+
+# ---- Generated graphs/results ----
+results/graphs/*.png
+results/graphs/*.jpg
+results/evaluation/*.png
+results/evaluation/*.json
+
+# ---- Temporary files ----
+*.tmp
+*.bak
+*~
+
+# ---- Keep tracked placeholder files ----
+!**/.gitkeep

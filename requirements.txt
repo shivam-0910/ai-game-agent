@@ -1,0 +1,14 @@
+# Core deep learning framework (used to implement the DQN)
+torch>=2.0
+
+# Numerical computation / state representation
+numpy>=1.24
+
+# Environment interface conventions for the custom Snake environment
+gymnasium>=0.29
+
+# Plotting training/evaluation results
+matplotlib>=3.7
+
+# Testing
+pytest>=7.4
