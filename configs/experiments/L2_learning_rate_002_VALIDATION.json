@@ -1,0 +1,24 @@
+{
+  "experiment_id": "L2_learning_rate_002_VALIDATION",
+  "name": "Higher learning rate (validation run)",
+  "description": "Full 500-episode validation of L2. Starts from the adopted Phase 6.1/6.2 configuration (REWARD_DEATH = -5.0, epsilon_decay = 0.995) and changes only learning_rate: 0.001 -> 0.002.",
+  "category": "learning_rate",
+  "parameter": "learning_rate",
+  "baseline_value": "0.001",
+  "experimental_value": "0.002",
+  "seed": 42,
+  "training_episodes": 500,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": true,
+  "model_path": "models/experiments/L2_learning_rate_002_VALIDATION/model.pth",
+  "results_dir": "results/experiments/L2_learning_rate_002_VALIDATION",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.995,
+    "learning_rate": 0.002
+  },
+  "network_hidden_size": null
+}

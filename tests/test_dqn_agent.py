@@ -553,3 +553,67 @@ class TestEpsilonDecayConfiguration:
         _ = DQNAgent(epsilon_decay=0.990)
         default_agent = DQNAgent()
         assert default_agent.epsilon_decay == pytest.approx(0.995)
+
+
+# ---------------------------------------------------------------------
+# Learning rate configuration tests (Phase 6.3)
+# ---------------------------------------------------------------------
+#
+# DQNAgent already exposes learning_rate as an explicit, backward-
+# compatible constructor parameter (default DEFAULT_LEARNING_RATE =
+# 1e-3), passed straight through to optim.Adam(..., lr=learning_rate),
+# so no changes to src/agent/dqn_agent.py were needed for Phase 6.3.
+# These tests lock in that contract: the default must stay 0.001,
+# custom values (0.0005 / 0.002 / 0.005, matching the Phase 6.3
+# screening experiments) must actually reach the optimizer, and
+# separate agent instances must not share or leak optimizer state.
+# All tests here are fast/deterministic -- no training episodes are run.
+
+
+class TestLearningRateConfiguration:
+    def test_default_learning_rate_is_0001(self):
+        """Phase 6.3 requirement: DQNAgent() must behave exactly as it
+        did before this phase -- default learning_rate unchanged."""
+        from src.agent.dqn_agent import DEFAULT_LEARNING_RATE
+
+        assert DEFAULT_LEARNING_RATE == pytest.approx(0.001)
+        agent = DQNAgent()
+        assert agent.optimizer.param_groups[0]["lr"] == pytest.approx(0.001)
+
+    def test_custom_learning_rate_reaches_the_optimizer(self):
+        agent = DQNAgent(learning_rate=0.0005)
+        assert agent.optimizer.param_groups[0]["lr"] == pytest.approx(0.0005)
+
+    @pytest.mark.parametrize(
+        "lr_value",
+        [0.0005, 0.002, 0.005],
+        ids=["L1_00005", "L2_0002", "L3_0005"],
+    )
+    def test_each_screening_experiment_lr_value_is_respected(self, lr_value):
+        """Directly covers L1/L2/L3's learning_rate values (Phase 6.3
+        screening experiments) being wired through to the optimizer."""
+        agent = DQNAgent(learning_rate=lr_value)
+        assert agent.optimizer.param_groups[0]["lr"] == pytest.approx(lr_value)
+
+    def test_optimizer_is_adam(self):
+        """learning_rate is meaningless unless it's actually configuring
+        the optimizer the agent trains with."""
+        agent = DQNAgent(learning_rate=0.002)
+        assert isinstance(agent.optimizer, torch.optim.Adam)
+
+    def test_separate_agents_with_different_lr_do_not_interfere(self):
+        """Two agents constructed with different learning_rate values
+        must have independent optimizers -- no shared mutable state
+        (e.g. a class-level default) leaking between instances."""
+        low_lr_agent = DQNAgent(learning_rate=0.0005)
+        high_lr_agent = DQNAgent(learning_rate=0.005)
+
+        assert low_lr_agent.optimizer.param_groups[0]["lr"] == pytest.approx(0.0005)
+        assert high_lr_agent.optimizer.param_groups[0]["lr"] == pytest.approx(0.005)
+
+    def test_default_agent_unaffected_by_a_custom_lr_agent_constructed_earlier(self):
+        """Constructing a custom-lr agent first must not mutate the
+        default DEFAULT_LEARNING_RATE used by later default agents."""
+        _ = DQNAgent(learning_rate=0.005)
+        default_agent = DQNAgent()
+        assert default_agent.optimizer.param_groups[0]["lr"] == pytest.approx(0.001)

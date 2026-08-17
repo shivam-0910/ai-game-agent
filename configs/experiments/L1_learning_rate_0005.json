@@ -1,0 +1,24 @@
+{
+  "experiment_id": "L1_learning_rate_0005",
+  "name": "Lower learning rate",
+  "description": "Tests whether a lower learning rate (0.001 -> 0.0005) improves training stability/final performance, starting from the adopted Phase 6.1/6.2 configuration.",
+  "category": "learning_rate",
+  "parameter": "learning_rate",
+  "baseline_value": "0.001",
+  "experimental_value": "0.0005",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/L1_learning_rate_0005/model.pth",
+  "results_dir": "results/experiments/L1_learning_rate_0005",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.995,
+    "learning_rate": 0.0005
+  },
+  "network_hidden_size": null
+}

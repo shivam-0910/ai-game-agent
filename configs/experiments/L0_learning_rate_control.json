@@ -1,0 +1,24 @@
+{
+  "experiment_id": "L0_learning_rate_control",
+  "name": "Learning rate control (adopted default)",
+  "description": "Same-budget control for Stage 6.3: default learning_rate=0.001 (DQNAgent's DEFAULT_LEARNING_RATE), all other settings identical to the adopted Phase 6.1/6.2 configuration (REWARD_DEATH=-5.0, epsilon_decay=0.995).",
+  "category": "learning_rate",
+  "parameter": "learning_rate",
+  "baseline_value": "0.001",
+  "experimental_value": "0.001",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/L0_learning_rate_control/model.pth",
+  "results_dir": "results/experiments/L0_learning_rate_control",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.995,
+    "learning_rate": 0.001
+  },
+  "network_hidden_size": null
+}

@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\L3_learning_rate_005\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 24.13,
+  "max_score": 52,
+  "min_score": 5,
+  "score_std_dev": 9.241600062606675,
+  "average_reward": 253.53399999999922,
+  "average_steps": 361.43,
+  "average_snake_length": 27.13,
+  "termination_counts": {
+    "self_collision": 97,
+    "wall_collision": 3
+  },
+  "termination_percentages": {
+    "self_collision": 97.0,
+    "wall_collision": 3.0
+  }
+}
