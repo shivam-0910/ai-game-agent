@@ -1,0 +1,19 @@
+{
+  "experiment_id": "R0_baseline_100ep",
+  "name": "Baseline reward values, 100-episode screening budget",
+  "description": "Same-budget reference point: default rewards, 100 training episodes.",
+  "category": "reward",
+  "parameter": "none (control)",
+  "baseline_value": "n/a",
+  "experimental_value": "n/a",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/R0_baseline_100ep/model.pth",
+  "results_dir": "results/experiments/R0_baseline_100ep",
+  "reward_overrides": null,
+  "agent_overrides": null,
+  "network_hidden_size": null
+}

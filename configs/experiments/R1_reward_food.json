@@ -1,0 +1,21 @@
+{
+  "experiment_id": "R1_reward_food",
+  "name": "Increase food reward",
+  "description": "Strengthen the food-eating incentive (10.0 -> 15.0).",
+  "category": "reward",
+  "parameter": "REWARD_FOOD",
+  "baseline_value": "10.0",
+  "experimental_value": "15.0",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/R1_reward_food/model.pth",
+  "results_dir": "results/experiments/R1_reward_food",
+  "reward_overrides": {
+    "REWARD_FOOD": 15.0
+  },
+  "agent_overrides": null,
+  "network_hidden_size": null
+}

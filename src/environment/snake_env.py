@@ -71,15 +71,39 @@ class SnakeEnv(gym.Env):
     render_mode:
         Either ``None`` or ``"ansi"``. Rendering is intentionally minimal
         (Section 13) and exists only to aid manual/visual debugging.
+    reward_overrides:
+        Optional mapping used to override individual reward magnitudes
+        for this instance only, without touching the module-level
+        defaults in ``constants.py``. Added in Phase 6 (Section 12 of
+        the spec: reward values are the first optimization category)
+        so reward experiments can construct
+        ``SnakeEnv(reward_overrides={"REWARD_FOOD": 15.0})`` without
+        any monkeypatching. When omitted (the default), behavior is
+        byte-for-byte identical to Phase 2-5: all five reward values
+        come straight from ``constants.py``, exactly as before this
+        parameter existed. Recognized keys: ``REWARD_FOOD``,
+        ``REWARD_DEATH``, ``REWARD_STEP``, ``REWARD_TOWARD_FOOD``,
+        ``REWARD_AWAY_FROM_FOOD``. Unknown keys raise ``ValueError``
+        immediately (fail loudly rather than silently ignoring a typo
+        in an experiment config).
     """
 
     metadata = {"render_modes": ["ansi"], "render_fps": 4}
+
+    _REWARD_DEFAULTS = {
+        "REWARD_FOOD": REWARD_FOOD,
+        "REWARD_DEATH": REWARD_DEATH,
+        "REWARD_STEP": REWARD_STEP,
+        "REWARD_TOWARD_FOOD": REWARD_TOWARD_FOOD,
+        "REWARD_AWAY_FROM_FOOD": REWARD_AWAY_FROM_FOOD,
+    }
 
     def __init__(
         self,
         board_size: int = DEFAULT_BOARD_SIZE,
         max_episode_steps: Optional[int] = None,
         render_mode: Optional[str] = None,
+        reward_overrides: Optional[dict[str, float]] = None,
     ) -> None:
         super().__init__()
 
@@ -87,6 +111,24 @@ class SnakeEnv(gym.Env):
             raise ValueError("board_size must be at least 5 to fit a starting snake.")
 
         self.board_size = board_size
+
+        # Per-instance reward values (Phase 6). Defaults to the exact
+        # module-level constants when reward_overrides is None/empty,
+        # so all pre-Phase-6 behavior and tests are unaffected.
+        rewards = dict(self._REWARD_DEFAULTS)
+        if reward_overrides:
+            unknown = set(reward_overrides) - set(self._REWARD_DEFAULTS)
+            if unknown:
+                raise ValueError(
+                    f"Unknown reward_overrides keys: {sorted(unknown)}. "
+                    f"Recognized keys: {sorted(self._REWARD_DEFAULTS)}."
+                )
+            rewards.update(reward_overrides)
+        self.reward_food = rewards["REWARD_FOOD"]
+        self.reward_death = rewards["REWARD_DEATH"]
+        self.reward_step = rewards["REWARD_STEP"]
+        self.reward_toward_food = rewards["REWARD_TOWARD_FOOD"]
+        self.reward_away_from_food = rewards["REWARD_AWAY_FROM_FOOD"]
         self.max_episode_steps = (
             max_episode_steps
             if max_episode_steps is not None
@@ -171,13 +213,13 @@ class SnakeEnv(gym.Env):
 
         self.steps_taken += 1
 
-        reward = REWARD_STEP
+        reward = self.reward_step
         termination_reason: Optional[str] = None
         ate_food = new_head == self.food_pos
 
         if self._is_collision(new_head, moving_into_tail_ok=ate_food):
             self._terminated = True
-            reward = REWARD_DEATH
+            reward = self.reward_death
             termination_reason = (
                 "wall_collision" if not self._in_bounds(new_head) else "self_collision"
             )
@@ -187,7 +229,7 @@ class SnakeEnv(gym.Env):
             if ate_food:
                 self.snake_body.appendleft(new_head)
                 self.score += 1
-                reward = REWARD_FOOD
+                reward = self.reward_food
                 if len(self.snake_body) >= self.board_size * self.board_size:
                     self._terminated = True
                     termination_reason = "board_full"
@@ -199,9 +241,9 @@ class SnakeEnv(gym.Env):
 
                 new_distance = self._manhattan_distance_to_food(new_head)
                 if new_distance < self._prev_food_distance:
-                    reward += REWARD_TOWARD_FOOD
+                    reward += self.reward_toward_food
                 elif new_distance > self._prev_food_distance:
-                    reward += REWARD_AWAY_FROM_FOOD
+                    reward += self.reward_away_from_food
                 self._prev_food_distance = new_distance
 
         if not self._terminated and self.steps_taken >= self.max_episode_steps:

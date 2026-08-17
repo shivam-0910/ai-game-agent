@@ -356,6 +356,73 @@ class TestRewards:
 
 
 # ---------------------------------------------------------------------
+# Reward overrides (Phase 6)
+# ---------------------------------------------------------------------
+
+
+class TestRewardOverrides:
+    """Tests for the optional reward_overrides constructor parameter
+    added in Phase 6 (Section 12 of the spec: reward experiments)."""
+
+    def test_default_matches_no_overrides(self):
+        env_default = SnakeEnv(board_size=8)
+        env_explicit_none = SnakeEnv(board_size=8, reward_overrides=None)
+        assert env_default.reward_food == env_explicit_none.reward_food == REWARD_FOOD
+        assert env_default.reward_death == env_explicit_none.reward_death == REWARD_DEATH
+        assert env_default.reward_step == env_explicit_none.reward_step == REWARD_STEP
+
+    def test_empty_dict_matches_defaults(self):
+        env = SnakeEnv(board_size=8, reward_overrides={})
+        assert env.reward_food == REWARD_FOOD
+        assert env.reward_death == REWARD_DEATH
+
+    def test_single_override_applied(self):
+        env = SnakeEnv(board_size=8, reward_overrides={"REWARD_FOOD": 15.0})
+        assert env.reward_food == 15.0
+        # Everything else stays at the module default.
+        assert env.reward_death == REWARD_DEATH
+        assert env.reward_step == REWARD_STEP
+        assert env.reward_toward_food == REWARD_TOWARD_FOOD
+        assert env.reward_away_from_food == REWARD_AWAY_FROM_FOOD
+
+    def test_multiple_overrides_applied(self):
+        env = SnakeEnv(
+            board_size=8, reward_overrides={"REWARD_FOOD": 20.0, "REWARD_DEATH": -5.0}
+        )
+        assert env.reward_food == 20.0
+        assert env.reward_death == -5.0
+
+    def test_unknown_override_key_raises(self):
+        with pytest.raises(ValueError):
+            SnakeEnv(board_size=8, reward_overrides={"NOT_A_REAL_KEY": 1.0})
+
+    def test_override_actually_used_in_step(self):
+        env = SnakeEnv(board_size=8, reward_overrides={"REWARD_FOOD": 42.0})
+        env.reset(seed=0)
+        _place_food_directly_ahead(env)
+        _, reward, _, _, _ = env.step(RelativeAction.STRAIGHT)
+        assert reward == 42.0
+
+    def test_death_override_actually_used_in_step(self):
+        env = SnakeEnv(board_size=8, reward_overrides={"REWARD_DEATH": -3.0})
+        env.reset(seed=0)
+        reward = None
+        for _ in range(env.board_size):
+            _, reward, terminated, _, _ = env.step(RelativeAction.STRAIGHT)
+            if terminated:
+                break
+        assert reward == -3.0
+
+    def test_module_constants_unaffected_by_instance_overrides(self):
+        """Constructing an env with overrides must not mutate the
+        shared module-level constants used by other SnakeEnv instances."""
+        SnakeEnv(board_size=8, reward_overrides={"REWARD_FOOD": 999.0})
+        fresh_env = SnakeEnv(board_size=8)
+        assert fresh_env.reward_food == REWARD_FOOD
+        assert REWARD_FOOD == 10.0  # the original module constant itself
+
+
+# ---------------------------------------------------------------------
 # Episode handling
 # ---------------------------------------------------------------------
 

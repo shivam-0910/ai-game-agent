@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\R2_reward_death_VALIDATION\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 29.26,
+  "max_score": 52,
+  "min_score": 8,
+  "score_std_dev": 10.104124570359044,
+  "average_reward": 309.6482999999981,
+  "average_steps": 427.33,
+  "average_snake_length": 32.26,
+  "termination_counts": {
+    "self_collision": 99,
+    "wall_collision": 1
+  },
+  "termination_percentages": {
+    "self_collision": 99.0,
+    "wall_collision": 1.0
+  }
+}

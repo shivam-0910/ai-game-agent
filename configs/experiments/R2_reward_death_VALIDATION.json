@@ -1,0 +1,21 @@
+{
+  "experiment_id": "R2_reward_death_VALIDATION",
+  "name": "Reduce death penalty magnitude (validation run)",
+  "description": "Full 500-episode validation of R2.",
+  "category": "reward",
+  "parameter": "REWARD_DEATH",
+  "baseline_value": "-10.0",
+  "experimental_value": "-5.0",
+  "seed": 42,
+  "training_episodes": 500,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": true,
+  "model_path": "models/experiments/R2_reward_death_VALIDATION/model.pth",
+  "results_dir": "results/experiments/R2_reward_death_VALIDATION",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": null,
+  "network_hidden_size": null
+}

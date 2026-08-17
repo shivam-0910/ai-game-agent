@@ -1,0 +1,22 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\R1_reward_food\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 27.38,
+  "max_score": 53,
+  "min_score": 5,
+  "score_std_dev": 10.67970793683805,
+  "average_reward": 285.19279999999725,
+  "average_steps": 849.39,
+  "average_snake_length": 30.38,
+  "termination_counts": {
+    "self_collision": 89,
+    "wall_collision": 10,
+    "step_limit": 1
+  },
+  "termination_percentages": {
+    "self_collision": 89.0,
+    "wall_collision": 10.0,
+    "step_limit": 1.0
+  }
+}

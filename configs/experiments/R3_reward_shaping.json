@@ -1,0 +1,22 @@
+{
+  "experiment_id": "R3_reward_shaping",
+  "name": "Reduce distance-shaping magnitude",
+  "description": "Halve distance-shaping rewards (+-0.1 -> +-0.05).",
+  "category": "reward",
+  "parameter": "REWARD_TOWARD_FOOD/REWARD_AWAY_FROM_FOOD",
+  "baseline_value": "0.1/-0.1",
+  "experimental_value": "0.05/-0.05",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/R3_reward_shaping/model.pth",
+  "results_dir": "results/experiments/R3_reward_shaping",
+  "reward_overrides": {
+    "REWARD_TOWARD_FOOD": 0.05,
+    "REWARD_AWAY_FROM_FOOD": -0.05
+  },
+  "agent_overrides": null,
+  "network_hidden_size": null
+}

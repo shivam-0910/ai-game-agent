@@ -1,0 +1,6 @@
+experiment_id,category,parameter,baseline_value,experiment_value,seed,training_episodes,evaluation_episodes,is_validation_run,average_score,max_score,min_score,score_std,average_reward,average_steps,average_snake_length,self_collision_rate,wall_collision_rate,status
+R0_baseline_100ep,reward,none (control),n/a,n/a,42,100,100,False,27.38,53,5,10.6797,285.1928,849.39,30.38,89.0,10.0,control
+R1_reward_food,reward,REWARD_FOOD,10.0,15.0,42,100,100,False,27.38,53,5,10.6797,285.1928,849.39,30.38,89.0,10.0,screening
+R2_reward_death,reward,REWARD_DEATH,-10.0,-5.0,42,100,100,False,23.81,49,1,11.5991,180.4827,7537.96,26.81,77.0,5.0,screening
+R3_reward_shaping,reward,REWARD_TOWARD_FOOD/REWARD_AWAY_FROM_FOOD,0.1/-0.1,0.05/-0.05,42,100,100,False,30.34,62,2,12.0966,321.3774,474.7,33.34,92.0,8.0,screening
+R2_reward_death_VALIDATION,reward,REWARD_DEATH,-10.0,-5.0,42,500,100,True,29.26,52,8,10.1041,309.6483,427.33,32.26,99.0,1.0,validated_pending_review
