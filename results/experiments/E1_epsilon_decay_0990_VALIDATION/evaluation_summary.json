@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\E1_epsilon_decay_0990_VALIDATION\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 32.13,
+  "max_score": 64,
+  "min_score": 10,
+  "score_std_dev": 12.141967457433484,
+  "average_reward": 340.64739999999733,
+  "average_steps": 498.69,
+  "average_snake_length": 35.13,
+  "termination_counts": {
+    "self_collision": 95,
+    "wall_collision": 5
+  },
+  "termination_percentages": {
+    "self_collision": 95.0,
+    "wall_collision": 5.0
+  }
+}

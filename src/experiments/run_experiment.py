@@ -35,7 +35,10 @@ per-experiment ``SnakeEnv``/``DQNAgent``.
 
 from __future__ import annotations
 
+import argparse
 import csv
+import json
+import sys
 import time
 from dataclasses import dataclass, fields
 from pathlib import Path
@@ -337,3 +340,87 @@ def run_experiment_and_record(
     result = run_experiment(experiment)
     append_to_registry(experiment, result, status=status, registry_path=registry_path)
     return result
+
+
+# ---------------------------------------------------------------------
+# Command-line interface
+# ---------------------------------------------------------------------
+#
+# Thin argparse wrapper around the existing ExperimentConfig.from_json()
+# and run_experiment_and_record(). Deliberately minimal per the Phase
+# 6.2 CLI request: no new experiment-running logic lives here, this
+# just gives the existing framework a terminal entry point so
+# experiments can be launched from PowerShell without inline Python.
+
+
+def _build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="python -m src.experiments.run_experiment",
+        description=(
+            "Run a single Phase 6 experiment end to end: load an "
+            "ExperimentConfig from JSON, train, evaluate, and append "
+            "the result to the experiment registry."
+        ),
+    )
+    parser.add_argument(
+        "--config",
+        required=True,
+        help="Path to experiment JSON configuration (an ExperimentConfig).",
+    )
+    parser.add_argument(
+        "--status",
+        default="screening",
+        help=(
+            "Registry status recorded for this run, e.g. 'screening', "
+            "'validated', or 'rejected' (default: screening)."
+        ),
+    )
+    return parser
+
+
+def _format_summary(experiment: ExperimentConfig, result: ExperimentRunResult) -> str:
+    lines = [
+        f"Experiment: {experiment.experiment_id}",
+        f"  Average score : {result.average_score:.4f}",
+        f"  Max score     : {result.max_score}",
+        f"  Min score     : {result.min_score}",
+        f"  Score std dev : {result.score_std:.4f}",
+        f"  Elapsed time  : {result.elapsed_seconds:.2f}s",
+        f"  Model path    : {result.model_path}",
+    ]
+    return "\n".join(lines)
+
+
+def main(argv: Optional[list[str]] = None) -> int:
+    """CLI entry point. Returns a process exit code."""
+    parser = _build_arg_parser()
+    args = parser.parse_args(argv)
+
+    config_path = Path(args.config)
+    if not config_path.exists():
+        print(f"Error: config file not found: {config_path}", file=sys.stderr)
+        return 1
+
+    try:
+        experiment = ExperimentConfig.from_json(config_path)
+    except json.JSONDecodeError as exc:
+        print(f"Error: invalid JSON in {config_path}: {exc}", file=sys.stderr)
+        return 1
+    except (ValueError, TypeError) as exc:
+        print(f"Error: invalid experiment configuration in {config_path}: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"Starting experiment: {experiment.experiment_id} ({experiment.name})")
+
+    try:
+        result = run_experiment_and_record(experiment, status=args.status)
+    except Exception as exc:  # noqa: BLE001 - surface any failure to the user
+        print(f"Error: experiment execution failed: {exc}", file=sys.stderr)
+        return 1
+
+    print(_format_summary(experiment, result))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

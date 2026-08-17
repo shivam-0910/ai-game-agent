@@ -4,3 +4,8 @@ R1_reward_food,reward,REWARD_FOOD,10.0,15.0,42,100,100,False,27.38,53,5,10.6797,
 R2_reward_death,reward,REWARD_DEATH,-10.0,-5.0,42,100,100,False,23.81,49,1,11.5991,180.4827,7537.96,26.81,77.0,5.0,screening
 R3_reward_shaping,reward,REWARD_TOWARD_FOOD/REWARD_AWAY_FROM_FOOD,0.1/-0.1,0.05/-0.05,42,100,100,False,30.34,62,2,12.0966,321.3774,474.7,33.34,92.0,8.0,screening
 R2_reward_death_VALIDATION,reward,REWARD_DEATH,-10.0,-5.0,42,500,100,True,29.26,52,8,10.1041,309.6483,427.33,32.26,99.0,1.0,validated_pending_review
+E0_epsilon_control,epsilon,epsilon_decay,0.995,0.995,42,100,100,False,23.81,49,1,11.5991,180.4827,7537.96,26.81,77.0,5.0,control
+E1_epsilon_decay_0990,epsilon,epsilon_decay,0.995,0.990,42,100,100,False,33.21,76,10,13.9416,352.703,509.41,36.21,99.0,1.0,screening/candidate
+E2_epsilon_decay_0997,epsilon,epsilon_decay,0.995,0.997,42,100,100,False,10.44,35,2,7.2812,103.898,147.84,13.44,97.0,3.0,rejected
+E3_epsilon_decay_0999,epsilon,epsilon_decay,0.995,0.999,42,100,100,False,0.31,2,0,0.5449,-92.8997,8833.76,3.31,4.0,74.0,rejected
+E1_epsilon_decay_0990_VALIDATION,epsilon,epsilon_decay,0.995,0.990,42,500,100,True,32.13,64,10,12.142,340.6474,498.69,35.13,95.0,5.0,rejected

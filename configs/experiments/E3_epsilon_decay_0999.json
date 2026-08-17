@@ -1,0 +1,23 @@
+{
+  "experiment_id": "E3_epsilon_decay_0999",
+  "name": "Very slow epsilon decay",
+  "description": "Tests a substantially slower transition toward exploitation (0.995 -> 0.999), starting from the adopted Phase 6.1 (R2) reward configuration.",
+  "category": "epsilon",
+  "parameter": "epsilon_decay",
+  "baseline_value": "0.995",
+  "experimental_value": "0.999",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/E3_epsilon_decay_0999/model.pth",
+  "results_dir": "results/experiments/E3_epsilon_decay_0999",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.999
+  },
+  "network_hidden_size": null
+}

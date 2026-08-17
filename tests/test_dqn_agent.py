@@ -466,3 +466,90 @@ class TestEnvironmentIntegration:
         # No exceptions raised across the full observation -> agent ->
         # action -> env.step() -> agent.remember() -> agent.learn() loop
         # confirms interface compatibility end-to-end.
+
+
+# ---------------------------------------------------------------------
+# Epsilon decay configuration tests (Phase 6.2)
+# ---------------------------------------------------------------------
+#
+# DQNAgent already exposes epsilon_decay as an explicit, backward-
+# compatible constructor parameter (default DEFAULT_EPSILON_DECAY =
+# 0.995), so no changes to src/agent/dqn_agent.py were needed for
+# Phase 6.2. These tests exist to lock in that contract: the default
+# must stay 0.995, custom values (0.990 / 0.997 / 0.999, matching the
+# Phase 6.2 screening experiments) must be respected, epsilon_min must
+# still be enforced regardless of the configured decay rate, and
+# separate agent instances must not share or leak decay state. All
+# tests here are fast/deterministic — no training episodes are run.
+
+
+class TestEpsilonDecayConfiguration:
+    def test_default_epsilon_decay_is_0995(self):
+        """Phase 6.2 requirement: DQNAgent() must behave exactly as it
+        did before this phase — default epsilon_decay unchanged."""
+        agent = DQNAgent()
+        assert agent.epsilon_decay == pytest.approx(0.995)
+
+    def test_custom_epsilon_decay_is_accepted_and_stored(self):
+        agent = DQNAgent(epsilon_decay=0.990)
+        assert agent.epsilon_decay == pytest.approx(0.990)
+
+    @pytest.mark.parametrize(
+        "decay_value",
+        [0.990, 0.997, 0.999],
+        ids=["E1_0990", "E2_0997", "E3_0999"],
+    )
+    def test_each_screening_experiment_decay_value_is_respected(self, decay_value):
+        """Directly covers E1/E2/E3's epsilon_decay values (Phase 6.2
+        screening experiments) being wired through correctly."""
+        agent = DQNAgent(epsilon_start=1.0, epsilon_min=0.01, epsilon_decay=decay_value)
+        agent.decay_epsilon()
+        assert agent.epsilon == pytest.approx(1.0 * decay_value)
+
+    def test_epsilon_decay_changes_epsilon_according_to_configured_value(self):
+        agent = DQNAgent(epsilon_start=1.0, epsilon_min=0.0, epsilon_decay=0.99)
+        agent.decay_epsilon()
+        agent.decay_epsilon()
+        agent.decay_epsilon()
+        assert agent.epsilon == pytest.approx(0.99 ** 3)
+
+    def test_epsilon_min_still_enforced_with_slow_decay(self):
+        """Even a very slow decay rate (E3's 0.999) must never push
+        epsilon below epsilon_min once enough steps accumulate."""
+        agent = DQNAgent(epsilon_start=0.02, epsilon_min=0.01, epsilon_decay=0.999)
+        for _ in range(5000):
+            agent.decay_epsilon()
+        assert agent.epsilon >= 0.01
+        assert agent.epsilon == pytest.approx(0.01)
+
+    def test_epsilon_min_still_enforced_with_fast_decay(self):
+        """E1's fast decay rate (0.990) must also respect epsilon_min."""
+        agent = DQNAgent(epsilon_start=1.0, epsilon_min=0.01, epsilon_decay=0.990)
+        for _ in range(2000):
+            agent.decay_epsilon()
+        assert agent.epsilon == pytest.approx(0.01)
+
+    def test_separate_agents_with_different_decay_do_not_interfere(self):
+        """Two agents constructed with different epsilon_decay values
+        must decay completely independently -- no shared mutable state
+        (e.g. a class-level default) leaking between instances."""
+        fast_agent = DQNAgent(epsilon_start=1.0, epsilon_min=0.0, epsilon_decay=0.990)
+        slow_agent = DQNAgent(epsilon_start=1.0, epsilon_min=0.0, epsilon_decay=0.999)
+
+        for _ in range(10):
+            fast_agent.decay_epsilon()
+            slow_agent.decay_epsilon()
+
+        assert fast_agent.epsilon_decay == pytest.approx(0.990)
+        assert slow_agent.epsilon_decay == pytest.approx(0.999)
+        assert fast_agent.epsilon == pytest.approx(0.990 ** 10)
+        assert slow_agent.epsilon == pytest.approx(0.999 ** 10)
+        # The faster-decaying agent must have strictly lower epsilon.
+        assert fast_agent.epsilon < slow_agent.epsilon
+
+    def test_default_agent_unaffected_by_a_custom_decay_agent_constructed_earlier(self):
+        """Constructing a custom-decay agent first must not mutate the
+        default DEFAULT_EPSILON_DECAY used by later default agents."""
+        _ = DQNAgent(epsilon_decay=0.990)
+        default_agent = DQNAgent()
+        assert default_agent.epsilon_decay == pytest.approx(0.995)

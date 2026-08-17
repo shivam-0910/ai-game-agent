@@ -1,0 +1,23 @@
+{
+  "experiment_id": "E0_epsilon_control",
+  "name": "Epsilon decay control (baseline rate)",
+  "description": "Same-budget control for Stage 6.2: default epsilon_decay=0.995, all other settings identical to the adopted Phase 6.1 (R2) configuration.",
+  "category": "epsilon",
+  "parameter": "epsilon_decay",
+  "baseline_value": "0.995",
+  "experimental_value": "0.995",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/E0_epsilon_control/model.pth",
+  "results_dir": "results/experiments/E0_epsilon_control",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.995
+  },
+  "network_hidden_size": null
+}

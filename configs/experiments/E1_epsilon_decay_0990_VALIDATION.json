@@ -1,0 +1,23 @@
+{
+  "experiment_id": "E1_epsilon_decay_0990_VALIDATION",
+  "name": "Faster epsilon decay (validation run)",
+  "description": "Full 500-episode validation of E1. Starts from the adopted Phase 6.1 (R2) configuration (REWARD_DEATH = -5.0) and changes only epsilon_decay: 0.995 -> 0.990.",
+  "category": "epsilon",
+  "parameter": "epsilon_decay",
+  "baseline_value": "0.995",
+  "experimental_value": "0.990",
+  "seed": 42,
+  "training_episodes": 500,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": true,
+  "model_path": "models/experiments/E1_epsilon_decay_0990_VALIDATION/model.pth",
+  "results_dir": "results/experiments/E1_epsilon_decay_0990_VALIDATION",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.990
+  },
+  "network_hidden_size": null
+}
