@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\S6_batch_128\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 30.35,
+  "max_score": 56,
+  "min_score": 6,
+  "score_std_dev": 10.149762399567626,
+  "average_reward": 321.6321999999975,
+  "average_steps": 492.73,
+  "average_snake_length": 33.35,
+  "termination_counts": {
+    "self_collision": 88,
+    "wall_collision": 12
+  },
+  "termination_percentages": {
+    "self_collision": 88.0,
+    "wall_collision": 12.0
+  }
+}

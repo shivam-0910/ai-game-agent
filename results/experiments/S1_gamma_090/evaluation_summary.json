@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\S1_gamma_090\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 33.67,
+  "max_score": 73,
+  "min_score": 8,
+  "score_std_dev": 13.377242094714667,
+  "average_reward": 357.6097999999972,
+  "average_steps": 517.89,
+  "average_snake_length": 36.67,
+  "termination_counts": {
+    "self_collision": 99,
+    "wall_collision": 1
+  },
+  "termination_percentages": {
+    "self_collision": 99.0,
+    "wall_collision": 1.0
+  }
+}

@@ -14,3 +14,11 @@ L1_learning_rate_0005,learning_rate,learning_rate,0.001,0.0005,42,100,100,False,
 L2_learning_rate_002,learning_rate,learning_rate,0.001,0.002,42,100,100,False,30.79,77,7,13.5119,326.0525,476.34,33.79,100.0,0.0,rejected
 L3_learning_rate_005,learning_rate,learning_rate,0.001,0.005,42,100,100,False,24.13,52,5,9.2416,253.534,361.43,27.13,97.0,3.0,rejected
 L2_learning_rate_002_VALIDATION,learning_rate,learning_rate,0.001,0.002,42,500,100,True,26.42,53,8,10.6431,278.4666,394.96,29.42,98.0,2.0,rejected
+S0_secondary_control,secondary,none (control),n/a,n/a,42,100,100,False,23.81,49,1,11.5991,180.4827,7537.96,26.81,77.0,5.0,control
+S1_gamma_090,secondary,gamma,0.95,0.90,42,100,100,False,33.67,73,8,13.3772,357.6098,517.89,36.67,99.0,1.0,rejected
+S2_gamma_099,secondary,gamma,0.95,0.99,42,100,100,False,29.63,59,7,11.0569,313.362,460.63,32.63,100.0,0.0,rejected
+S3_replay_50000,secondary,replay_capacity,100000,50000,42,100,100,False,23.81,49,1,11.5991,180.4827,7537.96,26.81,77.0,5.0,rejected
+S4_replay_200000,secondary,replay_capacity,100000,200000,42,100,100,False,23.81,49,1,11.5991,180.4827,7537.96,26.81,77.0,5.0,rejected
+S5_batch_32,secondary,batch_size,64,32,42,100,100,False,24.9,68,0,14.4792,44.8821,22656.73,27.9,42.0,2.0,rejected
+S6_batch_128,secondary,batch_size,64,128,42,100,100,False,30.35,56,6,10.1498,321.6322,492.73,33.35,88.0,12.0,rejected
+S1_gamma_090_VALIDATION,secondary,gamma,0.95,0.90,42,500,100,True,33.13,59,11,9.6887,352.2785,491.68,36.13,97.0,3.0,rejected

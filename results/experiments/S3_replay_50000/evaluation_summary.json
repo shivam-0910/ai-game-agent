@@ -1,0 +1,22 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\S3_replay_50000\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 23.81,
+  "max_score": 49,
+  "min_score": 1,
+  "score_std_dev": 11.599107419508318,
+  "average_reward": 180.48269999997115,
+  "average_steps": 7537.96,
+  "average_snake_length": 26.81,
+  "termination_counts": {
+    "self_collision": 77,
+    "step_limit": 18,
+    "wall_collision": 5
+  },
+  "termination_percentages": {
+    "self_collision": 77.0,
+    "step_limit": 18.0,
+    "wall_collision": 5.0
+  }
+}

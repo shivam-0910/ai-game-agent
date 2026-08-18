@@ -1,0 +1,27 @@
+{
+  "experiment_id": "S6_batch_128",
+  "name": "Larger batch size",
+  "description": "Tests whether a larger batch size (64 -> 128) improves performance by providing more stable gradient estimates, starting from the adopted Phase 6.1/6.2/6.3 configuration.",
+  "category": "secondary",
+  "parameter": "batch_size",
+  "baseline_value": "64",
+  "experimental_value": "128",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/S6_batch_128/model.pth",
+  "results_dir": "results/experiments/S6_batch_128",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.995,
+    "learning_rate": 0.001,
+    "gamma": 0.95,
+    "replay_capacity": 100000,
+    "batch_size": 128
+  },
+  "network_hidden_size": null
+}
