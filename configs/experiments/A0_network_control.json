@@ -1,0 +1,27 @@
+{
+  "experiment_id": "A0_network_control",
+  "name": "Network architecture control (256 hidden units)",
+  "description": "Control experiment for Phase 6.5 network architecture optimization. Uses the current baseline hidden layer size (256) with all Phase 6.1-6.4 adopted parameters.",
+  "category": "architecture",
+  "parameter": "network_hidden_size",
+  "baseline_value": "256",
+  "experimental_value": "256",
+  "seed": 42,
+  "training_episodes": 100,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": false,
+  "model_path": "models/experiments/A0_network_control/model.pth",
+  "results_dir": "results/experiments/A0_network_control",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.995,
+    "learning_rate": 0.001,
+    "gamma": 0.95,
+    "replay_capacity": 100000,
+    "batch_size": 64
+  },
+  "network_hidden_size": 256
+}

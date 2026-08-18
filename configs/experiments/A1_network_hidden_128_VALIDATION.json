@@ -1,0 +1,27 @@
+{
+  "experiment_id": "A1_network_hidden_128_VALIDATION",
+  "name": "Validation: Reduced network capacity (128 hidden units)",
+  "description": "Full 500-episode validation of the A1 screening candidate (128 hidden units) to determine whether the reduced network capacity improves performance over the Phase 6.1 reference.",
+  "category": "architecture",
+  "parameter": "network_hidden_size",
+  "baseline_value": "256",
+  "experimental_value": "128",
+  "seed": 42,
+  "training_episodes": 500,
+  "evaluation_episodes": 100,
+  "evaluation_base_seed": 1000000,
+  "is_validation_run": true,
+  "model_path": "models/experiments/A1_network_hidden_128_VALIDATION/model.pth",
+  "results_dir": "results/experiments/A1_network_hidden_128_VALIDATION",
+  "reward_overrides": {
+    "REWARD_DEATH": -5.0
+  },
+  "agent_overrides": {
+    "epsilon_decay": 0.995,
+    "learning_rate": 0.001,
+    "gamma": 0.95,
+    "replay_capacity": 100000,
+    "batch_size": 64
+  },
+  "network_hidden_size": 128
+}

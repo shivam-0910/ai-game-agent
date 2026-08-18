@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\A1_network_hidden_128_VALIDATION\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 32.3,
+  "max_score": 62,
+  "min_score": 9,
+  "score_std_dev": 11.449052715434936,
+  "average_reward": 342.92919999999737,
+  "average_steps": 490.98,
+  "average_snake_length": 35.3,
+  "termination_counts": {
+    "self_collision": 99,
+    "wall_collision": 1
+  },
+  "termination_percentages": {
+    "self_collision": 99.0,
+    "wall_collision": 1.0
+  }
+}

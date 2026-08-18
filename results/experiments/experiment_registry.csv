@@ -22,3 +22,7 @@ S4_replay_200000,secondary,replay_capacity,100000,200000,42,100,100,False,23.81,
 S5_batch_32,secondary,batch_size,64,32,42,100,100,False,24.9,68,0,14.4792,44.8821,22656.73,27.9,42.0,2.0,rejected
 S6_batch_128,secondary,batch_size,64,128,42,100,100,False,30.35,56,6,10.1498,321.6322,492.73,33.35,88.0,12.0,rejected
 S1_gamma_090_VALIDATION,secondary,gamma,0.95,0.90,42,500,100,True,33.13,59,11,9.6887,352.2785,491.68,36.13,97.0,3.0,rejected
+A0_network_control,architecture,network_hidden_size,256,256,42,100,100,False,23.01,54,0,13.4911,81.9022,16653.78,26.01,59.0,0.0,control
+A1_network_hidden_128,architecture,network_hidden_size,256,128,42,100,100,False,26.35,56,8,9.572,277.7853,380.42,29.35,99.0,1.0,rejected
+A2_network_hidden_512,architecture,network_hidden_size,256,512,42,100,100,False,24.05,57,6,9.5308,252.7545,361.8,27.05,98.0,2.0,rejected
+A1_network_hidden_128_VALIDATION,architecture,network_hidden_size,256,128,42,500,100,True,32.3,62,9,11.4491,342.9292,490.98,35.3,99.0,1.0,rejected

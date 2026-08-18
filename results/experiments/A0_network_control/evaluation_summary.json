@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\A0_network_control\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 23.01,
+  "max_score": 54,
+  "min_score": 0,
+  "score_std_dev": 13.491108182799513,
+  "average_reward": 81.90219999993187,
+  "average_steps": 16653.78,
+  "average_snake_length": 26.01,
+  "termination_counts": {
+    "self_collision": 59,
+    "step_limit": 41
+  },
+  "termination_percentages": {
+    "self_collision": 59.0,
+    "step_limit": 41.0
+  }
+}

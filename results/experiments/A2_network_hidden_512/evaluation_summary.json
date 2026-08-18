@@ -1,0 +1,20 @@
+{
+  "num_episodes": 100,
+  "checkpoint_path": "models\\experiments\\A2_network_hidden_512\\model.pth",
+  "base_seed": 1000000,
+  "average_score": 24.05,
+  "max_score": 57,
+  "min_score": 6,
+  "score_std_dev": 9.530784783314466,
+  "average_reward": 252.75449999999924,
+  "average_steps": 361.8,
+  "average_snake_length": 27.05,
+  "termination_counts": {
+    "self_collision": 98,
+    "wall_collision": 2
+  },
+  "termination_percentages": {
+    "self_collision": 98.0,
+    "wall_collision": 2.0
+  }
+}
