@@ -109,7 +109,7 @@ The project follows a structured pipeline from environment design to final optim
 
 **Environment Design:** A custom Snake environment is implemented following Gymnasium conventions. The environment manages the game grid, snake movement, food spawning, collision detection, and reward calculation. It supports configurable board size, maximum episode steps, and reward overrides for experimentation.
 
-**State Representation:** The state是一个11维向量，包含3个危险标志（直线、左转、右转相对于当前朝向）、4个朝向独热编码（上、下、左、右），以及4个食物方向标志（食物相对于蛇头的位置）。这种紧凑表示使网络能够快速训练。
+**State Representation:** The state is an 11-dimensional vector containing 3 danger flags (straight, left, right relative to current heading), 4 heading one-hot encodings (up, down, left, right), and 4 food direction flags (food position relative to snake head). This compact representation enables fast network training.
 
 **DQN Agent:** The agent uses a neural network with architecture 11 → 256 → 256 → 3. ReLU activations are used in hidden layers. The agent maintains a policy network and a target network, with the target network updated via hard replacement every 1,000 steps.
 
